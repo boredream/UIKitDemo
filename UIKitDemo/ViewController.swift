@@ -51,18 +51,24 @@ class ViewController: UIViewController {
     
     private var emojiChoices = ["👻", "🎃", "🍭", "🦇", "😱", "😈", "🍎", "🍬"]
 //    var emoji = Dictionary<Int, String>()
-    private var emoji = [Int:String]()
+    private var emoji = [Card:String]()
     private func emoji(for card: Card) -> String {
         // 首次获取set一个随机表情
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        if emoji[card] == nil, emojiChoices.count > 0 {
+            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
 }
 
 extension Int {
     var arc4random: Int {
-        return Int(arc4random_uniform(UInt32(self)))
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(self)))
+        } else {
+            return 0
+        }
     }
 }

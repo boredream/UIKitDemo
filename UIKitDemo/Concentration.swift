@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     
     init(numberOfParisOfCards: Int) {
         assert(numberOfParisOfCards > 0, "Concentration.init(\(numberOfParisOfCards)): you must have at least one pair")
@@ -42,13 +42,13 @@ class Concentration {
         }
     }
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in the cards")
         if !cards[index].isMatched {
             // 如果选中卡片是未匹配的
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 // 如果有已经翻起的卡片，且当前选择的不是这张卡
-                if cards[matchIndex].identifier == cards[index].identifier {
+                if cards[matchIndex] == cards[index] {
                     // 翻起的卡正好是匹配的
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
