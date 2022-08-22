@@ -14,19 +14,26 @@ class ViewController: UIViewController {
         return (cardButtons.count + 1) / 2
     }
     
-    // 这里的初始化=0，不会触发didSet回调
     private(set) var flipCount = 0 {
         didSet {
-            let attributes: [NSAttributedString.Key:Any] = [
-                .strokeWidth: 5.0,
-                .strokeColor: UIColor.orange
-            ]
-            let attributedString = NSAttributedString(string: "Flips: \(flipCount)", attributes: attributes)
-            flipCountLabel.attributedText = attributedString
+            updateFlipCountLabel()
         }
     }
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    func updateFlipCountLabel() {
+        let attributes: [NSAttributedString.Key:Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: UIColor.orange
+        ]
+        let attributedString = NSAttributedString(string: "Flips: \(flipCount)", attributes: attributes)
+        flipCountLabel.attributedText = attributedString
+    }
+    
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLabel()
+        }
+    }
     
     @IBOutlet private var cardButtons: [UIButton]!
     
